@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Agendamento</title>
+    <title>ByteCore Solutions - Sistema de Agendamento</title>
     <style>
         :root {
             --primary-color: #1a2b4c;
@@ -43,11 +43,84 @@
             margin-bottom: 20px;
         }
 
+        /* Ocultar elementos para navegação UI */
+        .hidden {
+            display: none !important;
+        }
+
+        /* =========================================
+           TELA DE LOGIN E CADASTRO (RF01)
+           ========================================= */
+        .auth-section {
+            padding: 40px 24px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 500px;
+        }
+
+        .auth-logo {
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .auth-subtitle {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            margin-bottom: 6px;
+            font-weight: 600;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .auth-input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .toggle-auth {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .toggle-auth span {
+            color: var(--accent-color);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* =========================================
+           TELA PRINCIPAL (AGENDAMENTO)
+           ========================================= */
         header {
             background-color: var(--primary-color);
             color: #ffffff;
             padding: 20px 16px;
             text-align: center;
+            position: relative;
         }
 
         header h1 {
@@ -61,9 +134,19 @@
             opacity: 0.8;
         }
 
-        main {
-            padding: 16px;
+        .btn-logout {
+            position: absolute;
+            top: 20px;
+            right: 16px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-decoration: underline;
         }
+
+        main { padding: 16px; }
 
         .section-title {
             font-size: 1rem;
@@ -72,11 +155,8 @@
             font-weight: 600;
         }
 
-        .section-title:first-of-type {
-            margin-top: 0;
-        }
+        .section-title:first-of-type { margin-top: 0; }
 
-        /* Seleção de Serviços */
         .services-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -97,17 +177,9 @@
             background-color: rgba(26, 43, 76, 0.05);
         }
 
-        .service-card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 4px;
-        }
+        .service-card h3 { font-size: 0.9rem; margin-bottom: 4px; }
+        .service-card span { font-size: 0.8rem; color: var(--text-light); }
 
-        .service-card span {
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-
-        /* Input de Data Customizado */
         .date-picker-wrapper input {
             width: 100%;
             padding: 12px;
@@ -118,7 +190,6 @@
             outline: none;
         }
 
-        /* Grade de Horários */
         .time-slots-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -143,7 +214,6 @@
             border-color: var(--primary-color);
         }
 
-        /* Botão de Ação Principal (CTA) */
         .btn-submit {
             width: 100%;
             background-color: var(--accent-color);
@@ -158,133 +228,94 @@
             transition: background 0.2s;
         }
 
-        .btn-submit:hover {
-            filter: brightness(0.9);
-        }
+        .btn-submit:hover { filter: brightness(0.9); }
 
-        /* Modal de Confirmação Sucesso */
+        /* Modal e Meus Agendamentos */
         .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
             background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-            z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            padding: 20px; opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease; z-index: 1000;
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
         .modal-card {
-            background-color: white;
-            border-radius: 16px;
-            padding: 24px;
-            width: 100%;
-            max-width: 350px;
-            text-align: center;
+            background-color: white; border-radius: 16px; padding: 24px;
+            width: 100%; max-width: 350px; text-align: center;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
 
         .modal-icon {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(0, 176, 116, 0.1);
-            color: var(--accent-color);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2rem;
+            width: 60px; height: 60px; background-color: rgba(0, 176, 116, 0.1);
+            color: var(--accent-color); border-radius: 50%; display: flex;
+            justify-content: center; align-items: center; font-size: 2rem;
             margin: 0 auto 16px auto;
         }
 
-        .modal-card h2 {
-            color: var(--primary-color);
-            font-size: 1.2rem;
-            margin-bottom: 8px;
-        }
-
-        .modal-card p {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 16px;
-            line-height: 1.4;
-        }
-
-        .reminder-alert {
-            background-color: #f0fdf4;
-            border: 1px dashed var(--accent-color);
-            border-radius: 8px;
-            padding: 10px;
-            font-size: 0.8rem;
-            color: #166534;
-            margin-bottom: 20px;
-        }
+        .modal-card h2 { color: var(--primary-color); font-size: 1.2rem; margin-bottom: 8px; }
+        .modal-card p { font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px; }
 
         .btn-close {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            width: 100%;
+            background-color: var(--primary-color); color: white; border: none;
+            border-radius: 8px; padding: 10px 20px; font-size: 0.9rem; cursor: pointer; width: 100%;
         }
 
-        /* Seção Meus Agendamentos Ativos */
         .my-appointments {
-            margin-top: 20px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 16px;
+            margin-top: 20px; border-top: 1px solid var(--border-color); padding-top: 16px;
+            display: none; /* Escondido até ter agendamento */
         }
 
         .appointment-item {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: #f8fafc; border: 1px solid var(--border-color);
+            border-radius: 8px; padding: 12px; display: flex;
+            justify-content: space-between; align-items: center;
         }
 
-        .appointment-info h4 {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-        }
-
-        .appointment-info p {
-            font-size: 0.8rem;
-            color: var(--text-light);
-        }
-
-        .btn-cancel {
-            background: none;
-            border: none;
-            color: #dc2626;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-        }
+        .appointment-info h4 { font-size: 0.9rem; color: var(--primary-color); }
+        .appointment-info p { font-size: 0.8rem; color: var(--text-light); }
+        .btn-cancel { background: none; border: none; color: #dc2626; font-size: 0.8rem; font-weight: 600; cursor: pointer; }
     </style>
 </head>
 <body>
 
-    <div class="app-container">
+    <!-- TELA 1: LOGIN E CADASTRO (RF01) -->
+    <div class="app-container" id="screen-auth">
+        <div class="auth-section">
+            <div class="auth-logo">ByteCore</div>
+            <p class="auth-subtitle" id="auth-title">Acesse para agendar seu horário</p>
+
+            <!-- Campos ocultos para Cadastro -->
+            <div class="input-group hidden" id="group-name">
+                <label>Nome Completo</label>
+                <input type="text" class="auth-input" placeholder="Ex: Ana Martins">
+            </div>
+
+            <div class="input-group">
+                <label>E-mail</label>
+                <input type="email" class="auth-input" placeholder="seu@email.com">
+            </div>
+
+            <div class="input-group">
+                <label>Senha</label>
+                <input type="password" class="auth-input" placeholder="••••••••">
+            </div>
+
+            <button class="btn-submit" id="btn-auth" onclick="realizarLogin()">Entrar</button>
+
+            <p class="toggle-auth" id="toggle-text">
+                Não tem uma conta? <span onclick="alternarCadastro()">Cadastre-se</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- TELA 2: APLICATIVO PRINCIPAL (Oculto por padrão) -->
+    <div class="app-container hidden" id="screen-app">
         <header>
-            <h1>Agendamentos</h1>
+            <h1>ByteCore</h1>
             <p>Rápido. Prático. Sem ligações.</p>
+            <button class="btn-logout" onclick="fazerLogout()">Sair</button>
         </header>
 
         <main>
@@ -317,9 +348,9 @@
 
             <button class="btn-submit" onclick="triggerBooking()">Confirmar Agendamento</button>
 
-            <div class="my-appointments">
+            <div class="my-appointments" id="active-item-container">
                 <div class="section-title" style="margin-top: 0;">Meus Agendamentos Ativos</div>
-                <div class="appointment-item" id="active-item">
+                <div class="appointment-item">
                     <div class="appointment-info">
                         <h4 id="display-service">Corte Slim</h4>
                         <p id="display-meta">Hoje às 10:30</p>
@@ -330,23 +361,54 @@
         </main>
     </div>
 
+    <!-- MODAL DE SUCESSO -->
     <div class="modal-overlay" id="success-modal">
         <div class="modal-card">
             <div class="modal-icon">✓</div>
             <h2>Agendamento Confirmado!</h2>
-            <p>Seu horário foi reservado com sucesso no banco de dados e a vaga está garantida.</p>
-            
-            <div class="reminder-alert">
-                <strong>Simulador Notificação:</strong><br>
-                Um lembrete SMS/WhatsApp será enviado automaticamente 2 horas antes do compromisso.
-            </div>
-
+            <p>Seu horário foi reservado com sucesso em nossa plataforma e a vaga está garantida.</p>
             <button class="btn-close" onclick="closeModal()">Ótimo, obrigado!</button>
         </div>
     </div>
 
     <script>
-        let selectedServiceName = "Corte de Cabelo";
+        // --- FUNÇÕES DE LOGIN (RF01) ---
+        let modoCadastro = false;
+
+        function alternarCadastro() {
+            modoCadastro = !modoCadastro;
+            const nomeInput = document.getElementById('group-name');
+            const authTitle = document.getElementById('auth-title');
+            const btnAuth = document.getElementById('btn-auth');
+            const toggleText = document.getElementById('toggle-text');
+
+            if (modoCadastro) {
+                nomeInput.classList.remove('hidden');
+                authTitle.innerText = "Crie sua conta para agendar";
+                btnAuth.innerText = "Criar Conta";
+                toggleText.innerHTML = 'Já tem uma conta? <span onclick="alternarCadastro()">Faça Login</span>';
+            } else {
+                nomeInput.classList.add('hidden');
+                authTitle.innerText = "Acesse para agendar seu horário";
+                btnAuth.innerText = "Entrar";
+                toggleText.innerHTML = 'Não tem uma conta? <span onclick="alternarCadastro()">Cadastre-se</span>';
+            }
+        }
+
+        function realizarLogin() {
+            // Esconde a tela de Login e mostra a tela do App principal
+            document.getElementById('screen-auth').classList.add('hidden');
+            document.getElementById('screen-app').classList.remove('hidden');
+        }
+
+        function fazerLogout() {
+            // Volta para a tela de Login
+            document.getElementById('screen-app').classList.add('hidden');
+            document.getElementById('screen-auth').classList.remove('hidden');
+        }
+
+        // --- FUNÇÕES DE AGENDAMENTO (RF02 em diante) ---
+        let selectedServiceName = "Corte Slim";
         let selectedTimeValue = "10:30";
 
         function selectService(element, name, price) {
@@ -363,12 +425,12 @@
 
         function triggerBooking() {
             const dateInput = document.getElementById('appointment-date').value;
-            // Atualiza painel interno do app antes de abrir o modal
+            // Atualiza os dados na área "Meus Agendamentos"
             document.getElementById('display-service').innerText = selectedServiceName;
             document.getElementById('display-meta').innerText = `${dateInput} às ${selectedTimeValue}`;
-            document.getElementById('active-item').style.display = 'flex';
+            document.getElementById('active-item-container').style.display = 'block';
             
-            // Abre o modal de sucesso para reduzir a ansiedade de confirmação
+            // Abre o modal de sucesso
             document.getElementById('success-modal').classList.add('active');
         }
 
@@ -378,7 +440,7 @@
 
         function cancelAppointment() {
             if(confirm("Tem certeza que deseja cancelar este agendamento de forma definitiva?")) {
-                document.getElementById('active-item').style.display = 'none';
+                document.getElementById('active-item-container').style.display = 'none';
             }
         }
     </script>
