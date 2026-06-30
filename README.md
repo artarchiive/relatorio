@@ -13,13 +13,15 @@
 * **Elton** — Scrum Master (Facilitação ágil, gestão do Trello e controle de prazos/entregas)
 * **Pedro Lacerda** — Product Owner (Visão de negócio, escopo e requisitos)
 * **Equipe de Desenvolvimento & Design** (Execução técnica, UX/UI e implementação)
+* **Kauhee** - Designer (Design de interfaces, desenvolvimento de funcionalidades)
+* **Bernardo, Alice** - Desenvolvedores (Implementação do sistema funcional)
 
 ---
 
 ## 2. Descrição do Problema e da Solução
 
 ### 2.1 O Problema (Baseado em Pesquisa)
-Identificamos que clientes locais de prestadores de serviços (salões de beleza, clínicas, consultórios) enfrentam barreiras críticas de tempo e comunicação. O agendamento tradicional via ligações telefônicas ou mensagens assíncronas no WhatsApp gera gargalos, longos tempos de espera e incerteza sobre a disponibilidade real de horários. 
+Identificamos que clientes locais de prestadores de serviços (salões de beleza, clínicas, consultórios) enfrentam barreiras críticas de tempo e comunicação. O agendamento tradicional via ligações telefônicas ou mensagens assíncronas no WhatsApp gera dificuldades, longos tempos de espera e incerteza sobre a disponibilidade real de horários. 
 
 Nossa persona mapeada, **Ana Martins** (32 anos, auxiliar administrativa), possui uma rotina severamente agitada entre trabalho e família. Ela apresenta altos níveis de ansiedade pela falta de confirmações imediatas e frequentemente desiste de agendar serviços quando o processo exige interações complexas ou demoradas.
 
